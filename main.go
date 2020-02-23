@@ -6,6 +6,7 @@ import (
 	"os"
 	"publish_it_everywhere/api"
 	"publish_it_everywhere/config"
+	"publish_it_everywhere/db"
 	appmiddleware "publish_it_everywhere/middleware"
 	"time"
 
@@ -19,6 +20,7 @@ import (
 
 func main() {
 	// load all config/env's
+	db.Initialize()
 	config.Initialize(os.Args[1:]...)
 	router := chi.NewRouter()
 

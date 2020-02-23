@@ -4,7 +4,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"publish_it_everywhere/db"
 	"publish_it_everywhere/respond"
+	"publish_it_everywhere/schema"
 
 	"github.com/go-chi/render"
 
@@ -12,23 +14,34 @@ import (
 )
 
 var (
-	requestToken *oauth.RequestToken
-	consumer     *oauth.Consumer
-	url          string
+	consumer *oauth.Consumer
 )
 
 func createLoginURL(w http.ResponseWriter, r *http.Request) error {
 
 	consumer = NewTwitterConsumer(os.Getenv("TWITTER_CONSUMER_KEY"),
 		os.Getenv("TWITTER_CONSUMER_SECRET"))
-	var err error
 	callbackURL := r.Host + "/api/twitter/callback"
 	callbackURL = "http://127.0.0.1:8080/api/twitter/callback" //TODO: Remove this
-	requestToken, url, err = consumer.GetRequestTokenAndUrl(callbackURL)
+	rqstToken, url, err := consumer.GetRequestTokenAndUrl(callbackURL)
 	if err != nil {
 		respond.ErrInternalServer(err)
+		return nil
 	}
-	log.Printf("Request token: %s", requestToken)
+	twitterOAuth := schema.TwitterOAuth{
+		ChannelID: r.URL.Query()["channel_id"][0],
+		RequestToken: schema.RequestToken{
+			OAuthToken:    rqstToken.Token,
+			OAuthVerifier: rqstToken.Secret,
+		},
+	}
+	if err := db.Insert(db.CollectionTwitterOAuth, twitterOAuth); err != nil {
+		log.Printf("err in insertion %v", err)
+		respond.ErrInternalServer(err)
+		return nil
+	}
+
+	log.Printf("Request token: %s", rqstToken)
 	render.Render(w, r, respond.OK(url))
 	return nil
 }
