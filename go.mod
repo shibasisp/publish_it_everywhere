@@ -10,5 +10,6 @@ require (
 	github.com/mrjones/oauth v0.0.0-20190623134757-126b35219450
 	github.com/rs/cors v1.7.0
 	github.com/sirupsen/logrus v1.4.2
+	go.mongodb.org/mongo-driver v1.3.0
 	google.golang.org/appengine v1.6.5
 )
