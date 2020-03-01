@@ -24,8 +24,6 @@ var (
 	LinkedinClientSecret string
 	// SelfURL ...
 	SelfURL string
-	// TestSelfURL ...
-	TestSelfURL string
 )
 
 // RuntimeValue contains data for a single value which had to be fetched
@@ -42,8 +40,7 @@ var Vars = map[string]RuntimeValue{
 	"DBNAME":                 {&DatabaseName, "mattermost-hackathon"},
 	"LINKEDIN_CLIENT_ID":     {&LinkedinClientID, ""},
 	"LINKEDIN_CLIENT_SECRET": {&LinkedinClientSecret, ""},
-	"SELF_URL":               {&SelfURL, ""},
-	"TEST_SELF_URL":          {&TestSelfURL, "http://localhost:8888"},
+	"SELF_URL":               {&SelfURL, "http://localhost:8888"},
 }
 
 var cfg = make(map[string]string)

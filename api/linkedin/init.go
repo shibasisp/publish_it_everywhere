@@ -16,7 +16,7 @@ var linkedinConfig *oauth2.Config
 func init() {
 	bg = context.Background()
 
-	u, _ := url.Parse(config.TestSelfURL)
+	u, _ := url.Parse(config.SelfURL)
 	u.Path = "/api/linkedin/authenticate"
 
 	linkedinConfig = &oauth2.Config{
