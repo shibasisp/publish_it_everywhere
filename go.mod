@@ -11,6 +11,6 @@ require (
 	github.com/rs/cors v1.7.0
 	github.com/sirupsen/logrus v1.4.2
 	go.mongodb.org/mongo-driver v1.3.0
+	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 	google.golang.org/appengine v1.6.5
-	gopkg.in/mgo.v2 v2.0.0-20180705113604-9856a29383ce
 )

@@ -7,11 +7,12 @@ import (
 )
 
 // Update function is used to update a document with a given query
-func Update(collection string, query types.JSON, in, out interface{}) error {
+func Update(collection string, query types.JSON, in, out interface{}, upsert bool) error {
 
 	after := options.After
 	ret := db.Collection(collection).FindOneAndUpdate(bg(), query, in, &options.FindOneAndUpdateOptions{
 		ReturnDocument: &after,
+		Upsert:         &upsert,
 	})
 	if ret.Err() != nil {
 		return ret.Err()
