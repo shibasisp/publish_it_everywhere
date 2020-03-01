@@ -4,12 +4,15 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"publish_it_everywhere/api"
+
+	"publish_it_everywhere/api/linkedin"
 	"publish_it_everywhere/config"
 	"publish_it_everywhere/db"
 	appmiddleware "publish_it_everywhere/middleware"
 
 	log "github.com/sirupsen/logrus"
+
+	"publish_it_everywhere/api"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -19,6 +22,7 @@ import (
 func main() {
 	// load all config/env's
 	config.Initialize(os.Args[1:]...)
+	linkedin.Initialize()
 	db.Initialize()
 	router := chi.NewRouter()
 

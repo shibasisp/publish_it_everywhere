@@ -13,7 +13,8 @@ import (
 var bg context.Context
 var linkedinConfig *oauth2.Config
 
-func init() {
+// Initialize ...
+func Initialize() {
 	bg = context.Background()
 
 	u, _ := url.Parse(config.SelfURL)
