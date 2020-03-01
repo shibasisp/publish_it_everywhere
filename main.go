@@ -8,11 +8,9 @@ import (
 	"publish_it_everywhere/config"
 	"publish_it_everywhere/db"
 	appmiddleware "publish_it_everywhere/middleware"
-	"time"
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/getsentry/sentry-go"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/rs/cors"
@@ -20,8 +18,8 @@ import (
 
 func main() {
 	// load all config/env's
-	db.Initialize()
 	config.Initialize(os.Args[1:]...)
+	db.Initialize()
 	router := chi.NewRouter()
 
 	cors := cors.New(cors.Options{
@@ -48,11 +46,6 @@ func main() {
 	)
 	// router.Get("/", api.IndexHandeler)
 	router.Route("/api", api.Init)
-
-	sentry.Init(sentry.ClientOptions{
-		Dsn: config.SentryDSN,
-	})
-	sentry.Flush(time.Second * 5)
 
 	log.Infoln("Starting server on port:", config.Port)
 	http.ListenAndServe(fmt.Sprintf(":%s", config.Port), router)

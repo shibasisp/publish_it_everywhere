@@ -46,7 +46,7 @@ func getAccessToken(w http.ResponseWriter, r *http.Request) error {
 		"$set": types.JSON{
 			"twitter": credentials.Twitter,
 		},
-	}, &credentials); err != nil {
+	}, &credentials, true); err != nil {
 		log.Println(err)
 		render.Render(w, r, respond.ErrInternalServer(err))
 		return nil
