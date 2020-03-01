@@ -22,7 +22,7 @@ func createLoginURL(w http.ResponseWriter, r *http.Request) error {
 	consumer = NewTwitterConsumer(os.Getenv("TWITTER_CONSUMER_KEY"),
 		os.Getenv("TWITTER_CONSUMER_SECRET"))
 	callbackURL := r.Host + "/api/twitter/callback"
-	callbackURL = "http://127.0.0.1:8080/api/twitter/callback" //TODO: Remove this
+	callbackURL = "http://127.0.0.1:8888/api/twitter/callback" //TODO: Remove this
 	rqstToken, url, err := consumer.GetRequestTokenAndUrl(callbackURL)
 	if err != nil {
 		respond.ErrInternalServer(err)

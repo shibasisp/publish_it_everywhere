@@ -3,7 +3,6 @@ package twitter
 import (
 	"bytes"
 	"errors"
-	"fmt"
 	"net/http"
 	"net/url"
 	"os"
@@ -12,7 +11,6 @@ import (
 	"publish_it_everywhere/schema"
 	"publish_it_everywhere/types"
 	"publish_it_everywhere/utils"
-	"strings"
 
 	"github.com/go-chi/render"
 
@@ -25,13 +23,12 @@ func postStatus(w http.ResponseWriter, r *http.Request) error {
 	if err := utils.Decode(r, &postReq); err != nil {
 		return err
 	}
-	status := url.PathEscape(strings.Join(strings.Split(postReq.Message, " ")[1:], " "))
+	status := url.PathEscape(postReq.Message)
 	if len(status) > 140 {
-		respond.ErrBadRequest(errors.New("The number of characters should be less than 160"))
+		respond.ErrBadRequest(errors.New("The number of characters should be less than 140"))
 		return nil
 	}
 	twitterPostURL := "https://api.twitter.com/1.1/statuses/update.json?status=" + status
-	fmt.Println("URL", twitterPostURL)
 	consumer := oauth.NewConsumer(
 		os.Getenv("TWITTER_CONSUMER_KEY"),
 		os.Getenv("TWITTER_CONSUMER_SECRET"),
