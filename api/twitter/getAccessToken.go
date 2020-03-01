@@ -40,7 +40,13 @@ func getAccessToken(w http.ResponseWriter, r *http.Request) error {
 			RequestToken:   twitterOAuth.RequestToken,
 		},
 	}
-	if err = db.Insert(db.CollectionCredentials, credentials); err != nil {
+	if err = db.Update(db.CollectionCredentials, types.JSON{
+		"channel_id": credentials.ChannelID,
+	}, types.JSON{
+		"$set": types.JSON{
+			"twitter": credentials.Twitter,
+		},
+	}, &credentials); err != nil {
 		log.Println(err)
 		render.Render(w, r, respond.ErrInternalServer(err))
 		return nil

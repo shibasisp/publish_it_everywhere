@@ -10,8 +10,10 @@ import (
 func Update(collection string, query types.JSON, in, out interface{}) error {
 
 	after := options.After
+	upsert := true
 	ret := db.Collection(collection).FindOneAndUpdate(bg(), query, in, &options.FindOneAndUpdateOptions{
 		ReturnDocument: &after,
+		Upsert:         &upsert,
 	})
 	if ret.Err() != nil {
 		return ret.Err()

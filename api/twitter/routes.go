@@ -11,4 +11,5 @@ import (
 func Init(r chi.Router) {
 	r.Method(http.MethodGet, "/authurl", utils.Handler(createLoginURL))
 	r.Method(http.MethodGet, "/callback", utils.Handler(getAccessToken))
+	r.Method(http.MethodPost, "/post-status", utils.Handler(postStatus))
 }
